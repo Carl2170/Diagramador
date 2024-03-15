@@ -15,9 +15,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
+
+
 @NgModule({
   declarations: [
      AppComponent,
+ 
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatListModule,
     MatGridListModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+   
+    
   ],
   providers: [
     provideAnimationsAsync()
