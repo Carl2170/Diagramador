@@ -1,1 +1,55 @@
-<p>vista register</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="card configCard " >
+            <form [formGroup]="formRegister" (ngSubmit)="onSubmit()">
+
+            <div class="card-header headerColor">
+                <div class="text-center">
+                    <h2 class="mt-2">DIAGRAMADOR</h2> 
+                </div>
+            </div>
+            <div class="card-body" >
+                <h3 ><strong>REGÍSTRATE</strong></h3>
+                <div class="form-group">
+                    <label >Nombres</label>
+                    <input type="text" class="form-control"formControlName="name">
+                    <div class="alert alert-danger mt-1" [hidden]="name.valid || name.pristine">
+                        <span *ngIf ="name.errors?.['required']">Campo de nombre vacío</span>
+                      </div>
+
+                    <label class="mt-2" >Apellidos</label>
+                    <input type="text" class="form-control "formControlName="lastname" >
+                    <div class="alert alert-danger mt-1" [hidden]="lastname.valid || lastname.pristine">
+                        <span *ngIf ="lastname.errors?.['required']">Campo de apellidos vacío</span>
+                      </div>
+
+                    <label class="mt-2">Email</label>
+                    <input type="email" class="form-control" formControlName="email" >
+                    <div class="alert alert-danger mt-1" [hidden]="email.valid || email.pristine">
+                        <span *ngIf ="email.errors?.['required']">Campo de email vacío</span>
+                        <span *ngIf ="email.errors?.['email']">El email debe ser válido</span>
+                      </div>
+    
+                    <label class="mt-2">Password</label>
+                    <input type="password" class="form-control" formControlName="password">
+                    <div class="alert alert-danger mt-1" [hidden]="password.valid  || password.pristine">
+                        <span *ngIf="password.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres</span>
+                        <span *ngIf="password.errors?.['pattern']">La contraseña debe contener al menos una mayúscula y un número</span>
+                      </div>
+
+                      <div class="alert alert-danger mt-1" *ngIf="errorMessage">
+                        {{ errorMessage }}
+                      </div>
+                </div>
+            </div>
+            <div class="row align-items-start container">
+                <button class="btn btnRegister" type="submit" style="margin-left: 10px;">CREAR CUENTA</button>
+
+                <div class="col">
+                    <p class="mt-4">Ya tienes una cuenta? <a class="underlineA" (click)="toLogin();"> Inicia Sesión</a></p>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

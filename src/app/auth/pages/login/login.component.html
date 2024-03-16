@@ -1,1 +1,31 @@
-<p>vista login</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="card configCard " >
+            <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+            <div class="card-header headerColor">
+                <div class="text-center">
+                    <h2 class="mt-2">DIAGRAMADOR</h2> 
+                </div>
+            </div>
+            <div class="card-body" >
+                <h3 ><strong>LOGIN</strong></h3>
+                    
+                        <label >Email</label>
+                        <input type="text" formControlName="email" class="form-control" name="email" >
+                        
+                        <label class="mt-4">Password</label>
+                        <input type="password"  formControlName="password" class="form-control" name="password">
+                    </div>
+                    <div class="alert alert-danger mt-1" *ngIf="errorMessage">
+                        {{ errorMessage }}
+                      </div>
+                    <div class="row align-items-start container">
+                        <button class="btn btnLogin" type="submit" style="margin-left: 10px;">INGRESAR</button>
+                        <div class="col">
+                            <p class="mt-4">¿No tienes una cuenta? <a class="underlineA" (click)="toRegister();"> Regístrate</a></p>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>

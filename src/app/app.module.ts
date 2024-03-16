@@ -14,6 +14,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { HttpClientModule} from '@angular/common/http';
+
 
 
 
@@ -34,8 +36,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
+    HttpClientModule
+
    
-    
   ],
   providers: [
     provideAnimationsAsync()

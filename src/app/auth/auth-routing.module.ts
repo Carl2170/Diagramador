@@ -5,7 +5,7 @@ import {  RouterModule,Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 
-const routes: Routes=[
+const routes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
@@ -18,9 +18,8 @@ const routes: Routes=[
 ]
 
 @NgModule({
-  declarations: [],
+ 
   imports: [
-    CommonModule,
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule]
