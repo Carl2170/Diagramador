@@ -5,14 +5,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { loginGuard } from '../auth/guards/is-authenticated.guard';
+import { RoomComponent } from './pages/room/room.component';
 
 const routes: Routes =[
   {path:'',
   component:DashboardLayoutComponent,
-  canActivate:[loginGuard],
+  //canActivate:[loginGuard],
     children:[
     {path:'home', component:HomeComponent},
-    {path:'profile', component:ProfileComponent}
+    {path:'profile', component:ProfileComponent},
+    {path:':room', component:RoomComponent}
   ]
   }
 ];
