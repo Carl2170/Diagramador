@@ -1,0 +1,48 @@
+<div class="card mt-4">
+    <div class="card-body">
+        <H3><strong>PROYECTOS</strong></H3>
+        <div class="container text-center">
+            <form [formGroup]="formProject" (ngSubmit)="onSubmit()">
+            <div class="row justify-content-start">
+                    <div class="col-6">
+                        <input type="text" class="form-control" placeholder="Ingrese un nombre para el proyecto" formControlName="name">
+                        <div class="alert alert-danger mt-1" *ngIf="errorMessage">
+                            {{ errorMessage }}
+                          </div>
+                    </div>
+                   
+                    <div class="col-2">
+                        <button type ="submit"  [disabled]="!isFormValid()" class="btn btn-primary">Crear Proyecto</button>
+                    </div>
+                 
+                </div>
+            </form>
+        </div>
+
+        <H3 class="mt-4"><strong>LISTA</strong></H3>
+        <table class="table table-bordered">
+            <thead class="table-light">
+              <tr class="table-dark text-center">
+                <th scope="col-3" >#</th>
+                <th scope="col-6">Nombre</th>
+                <th scope="col-3">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let register of registers">
+                <th class="col">{{register.id}} </th>
+                <td class="col-7">{{register.name}} </td>
+                <td> 
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary space">Abrir sala</button>
+                        <button class="btn btn-success space">+ colaboradores</button>
+                        <form (ngSubmit)="deleteRoom(register.id)">
+                            <button class="btn btn-danger space" type="submit">Eliminar</button>
+                        </form>
+                    </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>

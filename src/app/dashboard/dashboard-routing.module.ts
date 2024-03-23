@@ -10,7 +10,7 @@ import { RoomComponent } from './pages/room/room.component';
 const routes: Routes =[
   {path:'',
   component:DashboardLayoutComponent,
-  //canActivate:[loginGuard],
+  canActivate:[loginGuard],
     children:[
     {path:'home', component:HomeComponent},
     {path:'profile', component:ProfileComponent},
