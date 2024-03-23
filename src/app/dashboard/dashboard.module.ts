@@ -12,6 +12,9 @@ import { RoomComponent } from './pages/room/room.component';
 import { CookieService } from 'ngx-cookie-service';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { DrawComponent } from './components/draw/draw.component';
+import { ProjectComponent } from './pages/project/project.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 
@@ -24,12 +27,16 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
     MainComponent,
     ProfileComponent,
     RoomComponent,
-    DrawComponent
+    DrawComponent,
+    ProjectComponent
     
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     SocketIoModule.forRoot(config)
 
   ],

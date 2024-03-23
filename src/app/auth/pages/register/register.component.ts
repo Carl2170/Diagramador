@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import { FormGroup,FormControl, Validators} from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
