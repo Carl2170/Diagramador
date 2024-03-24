@@ -3,7 +3,6 @@ import {Router} from "@angular/router";
 import { FormGroup,FormControl, Validators} from '@angular/forms';
 import { ProjectService } from '../../services/project/project.service';
 import Swal from 'sweetalert2';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-project',

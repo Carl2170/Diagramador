@@ -13,10 +13,8 @@ export class AuthService {
   constructor(private http: HttpClient) { 
     this.apiURL = `${environment.apiUrl}:${environment.port}`;
   }
-  login(formValue:any){
-    return firstValueFrom(
-      this.http.post<any>(`${this.apiURL}/users/login`, formValue)
-    );    
+  login(userData: { email:string, password: string}){
+    return  this.http.post(`${this.apiURL}/users/login`, userData);    
   }
   
   postRegister(userData: {name: string, lastname: string, email:string, password: string}){

@@ -8,7 +8,10 @@ import {Router} from "@angular/router";
 export class HeaderComponent {
 
   constructor (private router:Router){}
-
+  
+  toHome(){
+    this.router.navigate(['/home']);
+  }
   toProfile(){
     this.router.navigate(['/profile']);
   }

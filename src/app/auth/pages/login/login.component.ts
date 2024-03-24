@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import { FormGroup,FormControl, Validators} from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
-
+import { Token  } from '../../guards/types';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +10,8 @@ import { AuthService } from '../../service/auth.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+
+ 
 
   errorMessage: string | null = null;
 
@@ -29,21 +31,33 @@ export class LoginComponent {
     this.router.navigate(['auth/register']);
   }
 
-  async onSubmit(){
-    try {
-      const response = await this.authService.login(this.formLogin.value);
-      localStorage.setItem('token', response.token);
-      await this.router.navigate(['home']);
-
-    } catch (error) {
-     this.showMessageError('Email o contraseña incorrecta') 
+  isFormValid(): boolean {
+    return this.formLogin.valid
+  }
+  
+   onSubmit(){
+   if(this.isFormValid()){
+    const formData = {
+      email: this.email.value,
+      password: this.password.value
     }
+    this.authService.login(formData).subscribe(
+      (res: any) => {
+        if ('token' in res) {
+          localStorage.setItem('token', res.token);      
+          this.router.navigate(['home']);        
+          
+        }
+      },
+      (error)=>{
+        this.errorMessage = 'Datos incorrectos'
+        console.log(error);
+        
+      }
+    );
+  } else{
+    this.formLogin.markAllAsTouched();
   }
+   }
 
-  showMessageError(mensaje: string) {
-    this.errorMessage = mensaje;
-    setTimeout(() => {
-      this.errorMessage = null;
-    }, 7000);
-  }
 }
