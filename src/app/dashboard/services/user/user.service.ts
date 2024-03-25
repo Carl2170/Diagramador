@@ -2,39 +2,32 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectService {
+export class UserService {
+
   private readonly apiURL: string;
   constructor(private http: HttpClient) {
     this.apiURL = `${environment.apiUrl}:${environment.port}`;
    }
 
-   create(data: {name: string}){
+   getUser(){
     const authToken = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${authToken}`
     });
-    return this.http.post(`${this.apiURL}/room/create`, data,  { headers })
+    return this.http.get(`${this.apiURL}/users/get`,  { headers })
   }
 
-  getRooms(){
+  updateUser(userData: {name: string, lastname: string, email:string}){
     const authToken = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${authToken}`
     });
-    return this.http.get(`${this.apiURL}/room/get-rooms`,  { headers })
-  }
+    return this.http.patch(`${this.apiURL}/users/update-user`, userData, { headers })
 
-  deleteRoom(id:any){
-    const authToken = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${authToken}`
-    });
-    return this.http.delete(`${this.apiURL}/room/delete-room/${id}`,  { headers })
 
   }
-
- 
 }

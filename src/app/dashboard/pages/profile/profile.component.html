@@ -1,1 +1,32 @@
-<p>profile works!</p>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <H3><strong>DATOS PERSONALES</strong></H3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                
+                <div class="col-6">
+                        <form [formGroup]="formProfile" (ngSubmit)="toUpdateData()" >
+                        <label class="mt-4">Nombres</label>
+                        <input  type="text" class="form-control"formControlName="name">
+                        <label class="mt-4">Apellidos</label>
+                        <input type="text" class="form-control"formControlName="lastname">
+                        <label class="mt-4">Email</label>
+                        <input type="text" class="form-control"formControlName="email">
+                        
+                        <button class="btn btn-primary mt-4" type="submit">Guardar cambios</button>
+                    </form>
+                    </div>
+                <div class="col-6">
+                <div class="d-flex justify-content-center">
+                        <div class="card image-circule">        
+                            <img [src]=""  *ngIf="" alt="Previsualización">
+                    </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
