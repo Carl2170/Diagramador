@@ -11,8 +11,6 @@ import { Token  } from '../../guards/types';
 })
 export class LoginComponent {
 
- 
-
   errorMessage: string | null = null;
 
   get email(){return this.formLogin.get('email') as FormControl}
@@ -43,10 +41,10 @@ export class LoginComponent {
     }
     this.authService.login(formData).subscribe(
       (res: any) => {
-        if ('token' in res) {
+        if ('token' in res || 'name' in res) {
           localStorage.setItem('token', res.token);      
           this.router.navigate(['home']);        
-          
+          localStorage.setItem('name', res.name);      
         }
       },
       (error)=>{
