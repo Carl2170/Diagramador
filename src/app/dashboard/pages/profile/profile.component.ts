@@ -59,6 +59,9 @@ export class ProfileComponent {
     return this.formProfile.valid
   }
 
+  formularioEdit(): boolean {
+    return this.formProfile.dirty;
+  }
 
    toUpdateData(){
     if (this.isFormValid()) {
@@ -69,7 +72,7 @@ export class ProfileComponent {
       }
       Swal.fire({
         title:'Actualizar datos?',
-        text:'¿Estás seguro de actualizrarlos datos?',
+        text:'¿Estás seguro de actualizar los datos?',
         icon:'warning',
         showCancelButton: true,
         confirmButtonText: 'Actualizar'

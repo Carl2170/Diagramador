@@ -15,7 +15,7 @@
                         <label class="mt-4">Email</label>
                         <input type="text" class="form-control"formControlName="email">
                         
-                        <button class="btn btn-primary mt-4" type="submit">Guardar cambios</button>
+                        <button class="btn btn-primary mt-4" type="submit" [disabled]="!formularioEdit()">Guardar cambios</button>
                     </form>
                     </div>
                 <div class="col-6">

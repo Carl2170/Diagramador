@@ -27,7 +27,5 @@ export class UserService {
       'Authorization': `Bearer ${authToken}`
     });
     return this.http.patch(`${this.apiURL}/users/update-user`, userData, { headers })
-
-
   }
 }

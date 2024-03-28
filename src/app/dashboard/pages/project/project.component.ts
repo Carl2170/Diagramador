@@ -11,7 +11,8 @@ import Swal from 'sweetalert2';
 })
 export class ProjectComponent {
   registers :any;
-
+  roomsCollaborate:any;
+  roomsToCollaborate :boolean= false;
   errorMessage: string | null = null;
 
   get name(){return this.formProject.get('name') as FormControl}
@@ -63,6 +64,7 @@ export class ProjectComponent {
   
   ngOnInit(){
    this.getRooms();
+   this.getRoomsToCollaborate();
   }
 
   getRooms(){
@@ -89,7 +91,7 @@ export class ProjectComponent {
           (res)=>{
             Swal.fire("Eliminado", "", "success");
             this.getRooms();
-
+            this.getRoomsToCollaborate();
           },(error)=>{
             console.log(error);
             
@@ -99,17 +101,73 @@ export class ProjectComponent {
     })
     
   }
-  private showImageQuantityFreeAlert(){
-    Swal.fire({
-      title: '¡Renders Gratuitos Agotados!',
-      text: 'Agotaste la cantidad de Renders gratuitos, por favor adquiere uno de nuestros planes',
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: 'Ver Planes'
-    }).then((result)=>{
-      if(result.isConfirmed){
-        this.router.navigate(['/billing'])
-      }
-    })
+
+  toRoom(nameProject:any){
+    localStorage.setItem('room', nameProject);
+    this.router.navigate(['/room',nameProject])
   }
+
+  async toAddCollaborators(){
+    Swal.fire({
+  title: "Invitación",
+  text:"Escriba el email del colaborador",
+  input: "text",
+  inputAttributes: {
+    autocapitalize: "off"
+  },
+  showCancelButton: true,
+  confirmButtonText: "Enviar invitación",
+  showLoaderOnConfirm: true,
+  preConfirm: async (invitation) => {
+    try {
+      this.projectService.getCollaborator(invitation).subscribe(
+      (res)=>{
+        Swal.fire({
+          title: 'Se ha enviado invitación a: <b>'+ invitation+ '<b>',        
+          icon:"success"
+        });
+      },(error)=>{
+      console.log(error);
+        Swal.fire({
+          title: ` no existe el usuario o error en el nombre`, 
+          icon:"info"
+        });
+      }
+     )
+  
+    } catch (error) {
+      Swal.showValidationMessage(`
+       Ocurrió un error: ${error}
+      `);
+    }
+  },
+})
+  }
+
+
+  getRoomsToCollaborate(){
+    this.projectService.getRoomCollaborate().subscribe(
+      (res)=>{
+        this.roomsCollaborate=res
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
+  }
+
+
+  showInvitationProcessingAlert() {
+    Swal.fire({
+      title: 'Cargando...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+        setTimeout(() => {
+          Swal.close();
+        }, 3000); // Mostrar durante 3 segundos
+      }
+    });
+}
+
 }
