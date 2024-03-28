@@ -33,8 +33,21 @@ export class ProjectService {
       'Authorization': `Bearer ${authToken}`
     });
     return this.http.delete(`${this.apiURL}/room/delete-room/${id}`,  { headers })
-
   }
 
- 
+  getCollaborator(email:any){
+    const authToken = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${authToken}`
+    });
+    return this.http.get(`${this.apiURL}/users/get-collaborator/${email}`,  { headers })
+  } 
+
+  getRoomCollaborate(){
+    const authToken = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${authToken}`
+    });
+    return this.http.get(`${this.apiURL}/room/rooms-colaborate`,  { headers })
+  }
 }

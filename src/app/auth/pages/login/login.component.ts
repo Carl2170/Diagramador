@@ -42,9 +42,11 @@ export class LoginComponent {
     this.authService.login(formData).subscribe(
       (res: any) => {
         if ('token' in res || 'name' in res) {
+        //  const tokenKey= `token_${res.name}`   
           localStorage.setItem('token', res.token);      
-          this.router.navigate(['home']);        
+          // const nameKey= `name_${res.name}`   
           localStorage.setItem('name', res.name);      
+          this.router.navigate(['home']);
         }
       },
       (error)=>{

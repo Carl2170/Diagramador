@@ -36,8 +36,8 @@ export class RegisterComponent {
     ]),
     password: new FormControl('', [
       Validators.required,
-      Validators.minLength(8),
-      Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9]).*$/)
+     // Validators.minLength(8),
+      //Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9]).*$/)
     ])
    })
   constructor( private router: Router,
