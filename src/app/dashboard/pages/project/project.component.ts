@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import { FormGroup,FormControl, Validators} from '@angular/forms';
 import { ProjectService } from '../../services/project/project.service';
+import { SocketWebService } from '../../services/socketIO/socket-web.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,9 +13,12 @@ import Swal from 'sweetalert2';
 export class ProjectComponent {
   registers :any;
   roomsCollaborate:any;
-  roomsToCollaborate :boolean= false;
   errorMessage: string | null = null;
-
+  existsProjectCreate:boolean= false
+  existsProjectsColaborate:boolean= false;
+  idUser:any;
+  arrayUsersConnected:any;
+ 
   get name(){return this.formProject.get('name') as FormControl}
   
   
@@ -26,7 +30,10 @@ export class ProjectComponent {
     'name': new FormControl('',Validators.required)
   });
 
-  constructor(private router:Router, private projectService: ProjectService ){}
+  constructor(private router:Router, 
+              private projectService: ProjectService,
+             )
+              {}
 
   isFormValid(): boolean {
     return this.formProject.valid
@@ -39,7 +46,6 @@ export class ProjectComponent {
       }
       this.projectService.create(formData).subscribe(
         (res)=>{
-          console.log('Backend response: ', res);
           Swal.fire({
             title:"Projecto creado",
             icon:"success"
@@ -65,17 +71,29 @@ export class ProjectComponent {
   ngOnInit(){
    this.getRooms();
    this.getRoomsToCollaborate();
+
   }
 
-  getRooms(){
-    this.projectService.getRooms().subscribe(
-      (res)=>{
-        this.registers=res
-      },
-      (error)=>{
-        console.log(error);
-      }
-    )
+ async getRooms(){
+    try {
+      this.projectService.getRooms().subscribe(
+        (res:any)=>{         
+          if(res && res.length>0){
+              this.registers=res
+              this.existsProjectCreate=true;
+            }else{
+              this.existsProjectCreate=false;
+            }
+        },
+        (error)=>{
+          console.log(error);
+        }
+      )
+    } catch (error) {
+      console.log(error);
+      
+    }
+  
   }
 
   deleteRoom(id:any){
@@ -100,11 +118,6 @@ export class ProjectComponent {
       }
     })
     
-  }
-
-  toRoom(nameProject:any){
-    localStorage.setItem('room', nameProject);
-    this.router.navigate(['/room',nameProject])
   }
 
   async toAddCollaborators(){
@@ -144,30 +157,45 @@ export class ProjectComponent {
 })
   }
 
-
-  getRoomsToCollaborate(){
-    this.projectService.getRoomCollaborate().subscribe(
-      (res)=>{
-        this.roomsCollaborate=res
-      },
-      (error)=>{
-        console.log(error);
-      }
-    )
+ async getRoomsToCollaborate(){
+    try {
+      this.projectService.getRoomCollaborate().subscribe(
+        (res:any)=>{   
+            if(res && res.length>0){        
+             this.roomsCollaborate = res     
+             this.existsProjectsColaborate=true        
+            }else{
+             this.existsProjectsColaborate=false        
+            }   
+        },
+        (error)=>{
+          console.log(error);
+        }
+      )
+    } catch (error) {
+      console.log(error);
+      
+    }
   }
 
-
-  showInvitationProcessingAlert() {
-    Swal.fire({
-      title: 'Cargando...',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-        setTimeout(() => {
-          Swal.close();
-        }, 3000); // Mostrar durante 3 segundos
-      }
-    });
+  async joinToRoom(idRoom:any, nameRoom:any){
+    localStorage.setItem('nameRoom', nameRoom);
+    localStorage.setItem('idRoom', idRoom);
+    this.idUser = localStorage.getItem('idUser')
+    try {
+      Swal.fire({
+        title:"¿Deseas ingresar a la sala?",
+        confirmButtonText: "Ingresar",
+        cancelButtonText:"Cancelar",
+        icon:"warning"
+      }).then((result)=>{
+        if(result.isConfirmed){    
+          this.router.navigate([`/room/${idRoom}`])     
+        }
+      })
+    } catch (error) {
+      console.log(error);     
+    }
+  }
 }
 
-}
