@@ -41,11 +41,10 @@ export class LoginComponent {
     }
     this.authService.login(formData).subscribe(
       (res: any) => {
-        if ('token' in res || 'name' in res) {
-        //  const tokenKey= `token_${res.name}`   
+        if ('token' in res || 'name' in res || 'id' in res ) {
           localStorage.setItem('token', res.token);      
-          // const nameKey= `name_${res.name}`   
           localStorage.setItem('name', res.name);      
+          localStorage.setItem('idUser', res.id);
           this.router.navigate(['home']);
         }
       },

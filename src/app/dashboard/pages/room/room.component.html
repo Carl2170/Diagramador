@@ -1,5 +1,14 @@
 
-<div class="">
+<div >
+    <div class="d-flex justify-content-center mt-4">
+        <h1 class="title">{{this.roomName}} </h1>
+
+    </div>
+    <div class="d-flex justify-content-start" >
+        <button style="margin-left: 15px;" class="btn btn-success"><small>Guardar cambios</small></button>
+        <button style="margin-left: 15px;" class="btn btn-primary" (click)="closeRoom()"><small>Cerrar sala</small></button>
+
+    </div>
     <div class="row">
         <div class="col-8">
             <app-draw></app-draw>
@@ -14,9 +23,8 @@
                 </thead>
                 <tbody>
                   <!-- <tr *ngFor="let register of registers"> -->
-                    <tr>
-
-                        <th class="col text-center">Carla</th>
+                    <tr *ngFor="let user of arrayUser">
+                        <td class="text-center">{{user}} </td>
                         <td> 
                             <div class="d-flex justify-content-center">
                                 <button class="btn btn-primary space" >Permisos</button>

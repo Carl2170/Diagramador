@@ -15,6 +15,7 @@ import { DrawComponent } from './components/draw/draw.component';
 import { ProjectComponent } from './pages/project/project.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 

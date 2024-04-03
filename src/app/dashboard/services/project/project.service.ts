@@ -50,4 +50,12 @@ export class ProjectService {
     });
     return this.http.get(`${this.apiURL}/room/rooms-colaborate`,  { headers })
   }
+
+  setListUsersConnected(idRoom:any){
+    const authToken = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${authToken}`
+    });
+    return this.http.patch(`${this.apiURL}/room/users-connected/${idRoom} `,  { headers })
+  }
 }
