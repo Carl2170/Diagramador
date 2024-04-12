@@ -15,7 +15,8 @@ import { DrawComponent } from './components/draw/draw.component';
 import { ProjectComponent } from './pages/project/project.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { GodiagramComponent } from './pages/diagram/godiagram/godiagram.component';
+import { GopaletteComponent } from './pages/diagram/components/gopalette/gopalette.component';
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 
@@ -29,8 +30,9 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
     ProfileComponent,
     RoomComponent,
     DrawComponent,
-    ProjectComponent
-    
+    ProjectComponent,
+    GodiagramComponent,
+    GopaletteComponent    
   ],
   imports: [
     CommonModule,
