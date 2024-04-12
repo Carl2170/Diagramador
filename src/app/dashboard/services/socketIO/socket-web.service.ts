@@ -48,7 +48,6 @@ import { environment } from '../../../../environments/environment';
     this.ioSocket.emit('room-started', { userId:user_id ,nameUser:this.nameUser, roomId:roomId, nameRoom: nameProject });
   
     this.ioSocket.on('room-started', (response: string) => {
-      console.log(response);
     });
 
   }

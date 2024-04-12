@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-2 mt-2" style="padding-left: 20px;">
+        <!-- <canvas #paletteCanvas width="200" height="600" style="border: 1px; border-color: black; border: solid;"></canvas> -->
+        <div *ngFor="let image of images" style="border: 1px; border-style: groove;">
+            <div class="mt-2">
+                <div class="row">
+                    <div class="col-8">
+                        <img  [src]="image.src" alt="" style="width: 40px; height: 40px; padding-right: 10px;">
+                        <small>{{image.name}} </small>
+                    </div>
+                    <div class="col">
+                        <button class="add-button mt-2" (click)="addObject(image.src)">+</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div><br>
+        <strong class="mt-2">Mensaje</strong>
+        <div class="mt-2">
+            <div class="row"  style="border: 1px; border-style: groove;">
+                <div class="col-8">
+                    <img  src="assets/components/respuesta mensaje asincronico.png" alt="" style="width: 40px; height: 40px; padding-right: 10px;">
+                    <small>Respuesta</small>
+                </div>
+                <div class="col">
+                    <button class="add-button mt-2" (click)="startDrawing()">+</button>
+                </div>
+
+            </div>
+            <div class="row"  style="border: 1px; border-style: groove;">
+                <div class="col-8">
+                    <img  src="assets/components/mensaje asincrono.png" alt="" style="width: 40px; height: 40px; padding-right: 10px;">
+                    <small>Asíncrono</small>
+                </div>
+                <div class="col">
+                    <button class="add-button mt-2">+</button>
+                </div>
+            </div>
+
+            <div class="row"  style="border: 1px; border-style: groove;">
+                <div class="col-8">
+                    <img  src="assets/components/mensaje sincronico.png" alt="" style="width: 40px; height: 40px; padding-right: 10px;">
+                    <small>Síncrono</small>
+                </div>
+                <div class="col">
+                    <button  class="add-button mt-2" >+</button>
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <strong >Otros</strong>
+        <div class="row"  style="border: 1px; border-style: groove;">
+            <div class="col-8">
+                <img  src="assets/components/interaction.png" alt="" style="width: 50px; height: 35px; padding-right: 10px;">
+                <small>Respuesta</small>
+            </div>
+            <div class="col">
+                <button class="add-button mt-2" style="padding-bottom: 5px;">+</button>
+            </div>
+
+        </div>
+
+    </div>
+      
+      <div class="col-7 mt-2">
+        <canvas  #diagramCanvas  width="800" height="600" style="border: 1px; border-color: black; border: solid;"></canvas>
+      </div>
+    
+</div>
