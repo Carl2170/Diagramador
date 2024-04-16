@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-2 mt-2" style="padding-left: 20px;">
         <!-- <canvas #paletteCanvas width="200" height="600" style="border: 1px; border-color: black; border: solid;"></canvas> -->
-        <div *ngFor="let image of images" style="border: 1px; border-style: groove;">
+        <!-- <div *ngFor="let image of images" style="border: 1px; border-style: groove;">
             <div class="mt-2">
                 <div class="row">
                     <div class="col-8">
-                        <img  [src]="image.src" alt="" style="width: 40px; height: 40px; padding-right: 10px;">
+                        <img  src='assets/component/actor.png' alt="" style="width: 40px; height: 40px; padding-right: 10px;">
                         <small>{{image.name}} </small>
                     </div>
                     <div class="col">
@@ -15,7 +15,64 @@
                 </div>
 
             </div>
-        </div><br>
+        </div><br> -->
+        <div class="mt-2">
+            <div class="row" style="border: 1px; border-style: groove;">
+                <div class="col-8">
+                    <img  src='assets/component/actor.png' alt="" style="width: 40px; height: 40px; padding-right: 10px;">
+                    <small>Actor </small>
+                </div>
+                <div class="col">
+                    <button class="add-button mt-2" (click)="addActor('assets/component/actor.png')">+</button>
+                </div>
+            </div>
+
+            <div class="row" style="border: 1px; border-style: groove;">
+                <div class="col-8">
+                    <img  src='assets/component/boundary.png' alt="" style="width: 40px; height: 40px; padding-right: 10px;">
+                    <small>Boundary </small>
+                </div>
+                <div class="col">
+                    <button class="add-button mt-2" (click)="addBoundary()">+</button>
+                </div>
+
+            </div>
+
+            <div class="row" style="border: 1px; border-style: groove;">
+                <div class="col-8">
+                    <img  src='assets/component/control.png' alt="" style="width: 40px; height: 40px; padding-right: 10px;">
+                    <small>Control </small>
+                </div>
+                <div class="col">
+                    <button class="add-button mt-2" (click)="addControl()">+</button>
+                </div>
+
+            </div>
+
+            <div class="row" style="border: 1px; border-style: groove;">
+                <div class="col-8">
+                    <img  src='assets/component/entidad.png' alt="" style="width: 40px; height: 40px; padding-right: 10px;">
+                    <small>Entidad </small>
+                </div>
+                <div class="col">
+                    <button class="add-button mt-2" (click)="addEntity()">+</button>
+                </div>
+
+            </div>
+
+            <div class="row" style="border: 1px; border-style: groove;">
+                <div class="col-8">
+                    <img  src='assets/component/lifeline.png' alt="" style="width: 40px; height: 40px; padding-right: 10px;">
+                    <small>Objeto </small>
+                </div>
+                <div class="col">
+                    <button class="add-button mt-2" (click)="addObjectRec()">+</button>
+                </div>
+
+            </div>
+
+
+        </div>
         <strong class="mt-2">Mensaje</strong>
         <div class="mt-2">
             <div class="row"  style="border: 1px; border-style: groove;">
@@ -30,34 +87,36 @@
             </div>
             <div class="row"  style="border: 1px; border-style: groove;">
                 <div class="col-8">
-                    <img  src="assets/components/mensaje asincrono.png" alt="" style="width: 40px; height: 40px; padding-right: 10px;">
-                    <small>Asíncrono</small>
+                    <img  src="assets/components/letra.png"  style="width: 40px; height: 25px; padding-right: 10px; padding-top: 10px;">
+                    <small style="margin-top: 20px;">Texto</small>
                 </div>
                 <div class="col">
-                    <button class="add-button mt-2">+</button>
+                    <button class="add-button mt-2" (click)="addToChartText('mensaje 1');">+</button>
                 </div>
             </div>
 
-            <div class="row"  style="border: 1px; border-style: groove;">
-                <div class="col-8">
-                    <img  src="assets/components/mensaje sincronico.png" alt="" style="width: 40px; height: 40px; padding-right: 10px;">
-                    <small>Síncrono</small>
-                </div>
-                <div class="col">
-                    <button  class="add-button mt-2" >+</button>
-                </div>
-            </div>
 
         </div>
         <br>
         <strong >Otros</strong>
         <div class="row"  style="border: 1px; border-style: groove;">
             <div class="col-8">
-                <img  src="assets/components/interaction.png" alt="" style="width: 50px; height: 35px; padding-right: 10px;">
-                <small>Respuesta</small>
+                <img  src="assets/component/fragmento.png" alt="" style="width: 50px; height: 35px; padding-right: 10px;">
+                <small>Interacción</small>
             </div>
             <div class="col">
-                <button class="add-button mt-2" style="padding-bottom: 5px;">+</button>
+                <button class="add-button mt-2" (click)="addRectFrag();" style="padding-bottom: 5px;">+</button>
+            </div>
+
+        </div>
+
+        <div class="row"  style="border: 1px; border-style: groove;">
+            <div class="col-8">
+                <img  src="assets/component/chartlife.png" alt="" style="width: 50px; height: 35px; padding-right: 10px;">
+                <small>Activación</small>
+            </div>
+            <div class="col">
+                <button class="add-button mt-2" (click)="addChartActivation();" style="padding-bottom: 5px;">+</button>
             </div>
 
         </div>
