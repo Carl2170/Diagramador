@@ -83,7 +83,7 @@ export class GodiagramComponent implements AfterViewInit {
   })
   }
 
-  async addActor(url: string){
+  async addActor(){
     this.leftObject= this.getArrayDistanceLeftComponents();
 //    const actor= await this.fabricService.toActor(url,this.leftObject,20);
     const actor= await this.fabricService.toA(this.leftObject,20);
@@ -94,19 +94,28 @@ export class GodiagramComponent implements AfterViewInit {
     this.arrayDistanceLeftComponents.push(this.leftObject) // Hacer que la imagen no sea seleccionable
     const obj= new ObjectComp(this.arrayElements.length+1,'actor',50, this.leftObject);
     this.arrayElements.push(obj);
-    this.diagramCanvas.add(actor);
+    this.diagramCanvas.add(actor); 
 
     //linea de vida
     const imgTop = actor.top || 0; 
     const imgHeight = actor.height || 0; 
 
-    const lifeLine= await this.fabricService.lineLife(this.leftObject-20, imgTop, imgHeight);
+    const lifeLine= await this.fabricService.lineLife(this.leftObject-40, imgTop, imgHeight);
     this.diagramCanvas.add(lifeLine); 
+
+     //cuadro de texto 
+     const chartMessage= await this.fabricService.chartText(this.leftObject-30, imgTop +60,'Actor');
+     this.diagramCanvas.add(chartMessage);
 
 
     this.diagramCanvas.on('object:moving', (e: any) => {
+      var left1 = actor.left || 0
       if (e.target === actor) {
         this.handleObjectImgMoving(e, actor, lifeLine);
+        chartMessage.set({
+          top: imgTop + 60,
+          left: left1 -30
+        })
       }
     });
   }
@@ -130,12 +139,21 @@ export class GodiagramComponent implements AfterViewInit {
 
     const lifeLine= await this.fabricService.lineLife(this.leftObject, imgTop, imgHeight);
     this.diagramCanvas.add(lifeLine); 
-
-
+   
+    //cuadro de texto 
+    const chartMessage= await this.fabricService.chartText(this.leftObject-30, imgTop +60,'Boundary');
+    this.diagramCanvas.add(chartMessage);
+  
     this.diagramCanvas.on('object:moving', (e: any) => {
       if (e.target === boundary) {
+        var left1 = boundary.left || 0
         this.handleObjectImgMoving(e, boundary, lifeLine);
+        chartMessage.set({
+          top: imgTop + 60,
+          left: left1 -20
+        })
       }
+     
     });
  
   }
@@ -159,10 +177,17 @@ export class GodiagramComponent implements AfterViewInit {
     const lifeLine= await this.fabricService.lineLife(this.leftObject, imgTop, imgHeight);
     this.diagramCanvas.add(lifeLine); 
 
+    const chartMessage= await this.fabricService.chartText(this.leftObject-30, imgTop +60,'Control');
+    this.diagramCanvas.add(chartMessage);
 
     this.diagramCanvas.on('object:moving', (e: any) => {
+      var left1= control.left || 0
       if (e.target === control) {
         this.handleObjectImgMoving(e, control, lifeLine);
+        chartMessage.set({
+          top: imgTop + 60,
+          left: left1 -20
+        })
       }
     });
   }
@@ -184,12 +209,20 @@ export class GodiagramComponent implements AfterViewInit {
     const imgHeight = entidad.height || 0; 
 
     const lifeLine= await this.fabricService.lineLife(this.leftObject, imgTop, imgHeight);
-    this.diagramCanvas.add(lifeLine); 
-
+    this.diagramCanvas.add(lifeLine);
+    
+       //cuadro de texto 
+    const chartMessage= await this.fabricService.chartText(this.leftObject-30, imgTop +60,'Entidad');
+    this.diagramCanvas.add(chartMessage);
 
     this.diagramCanvas.on('object:moving', (e: any) => {
+      var left1= entidad.left ||0
       if (e.target === entidad) {
         this.handleObjectImgMoving(e, entidad, lifeLine);
+        chartMessage.set({
+          top: imgTop + 60,
+          left: left1 -20
+        })
       }
     });
   }
@@ -213,10 +246,18 @@ export class GodiagramComponent implements AfterViewInit {
     const lifeLine= await this.fabricService.lineLife(this.leftObject, imgTop, imgHeight);
     this.diagramCanvas.add(lifeLine); 
 
+    //cuadro de texto 
+    const chartMessage= await this.fabricService.chartText(this.leftObject-30, imgTop +60,'Objeto');
+    this.diagramCanvas.add(chartMessage);
 
     this.diagramCanvas.on('object:moving', (e: any) => {
+      var left1= object.left ||0;
       if (e.target === object) {
         this.handleObjectImgMoving(e, object, lifeLine);
+        chartMessage.set({
+          top: imgTop + 60,
+          left: left1 -20
+        })
       }
     });
   }
@@ -228,55 +269,25 @@ export class GodiagramComponent implements AfterViewInit {
     }
    return  (this.arrayDistanceLeftComponents[this.arrayDistanceLeftComponents.length-1] + 150);
    }
-
-  async addObject(url:string){
-
-   
-
-    if(url === 'assets/component/actor.png'){
-      
-
-    }
-
-    if(url === 'assets/component/boundary.png')
-      var objSequence= await this.fabricService.toBoundary(this.leftObject,20);
-
-    if(url === 'assets/component/control.png')
-      var objSequence= await this.fabricService.toBoundary(this.leftObject,20);
-
-    if(url === 'assets/component/entidad.png')
-      var objSequence= await this.fabricService.toBoundary(this.leftObject,20);
-
-   // const img = await this.fabricService.createImage(url,this.leftObject,50);
-    //var img= await this.fabricService.toBoundary(this.leftObject,20);
-    this.objSequence.scaleToWidth(70);
-    this.arrayDistanceLeftComponents.push(this.leftObject) // Hacer que la imagen no sea seleccionable
-    this.obj= new ObjectComp(this.arrayElements.length+1,url,50, this.leftObject)
-    this.arrayElements.push(this.obj)
-    this.diagramCanvas.add(this.objSequence)
-
-    this.objSequence.setCoords();
-
-    const imgTop = this.objSequence.top || 0; 
-    const imgHeight = this.objSequence.height || 0; 
-
-    const lifeLine= await this.fabricService.lineLife(this.leftObject, imgTop, imgHeight);
-    this.diagramCanvas.add(lifeLine); 
-
-    // const chartLife= await this.fabricService.chartLife(this.leftObject+27,150,250);
-    // this.diagramCanvas.add(chartLife);
-
-    this.diagramCanvas.on('object:moving', (e: any) => {
-      if (e.target === this.objSequence) {
-        this.handleObjectImgMoving(e, this.objSequence, lifeLine);
-      }
-    });
-  }
-  
+ 
   startDrawing(): void {
   this.isDrawingLine = true;  
   }
 
+  //MENSAJE DEL MISMO OBJETO
+  async messageObject(){
+   try {    
+    var message= await this.fabricService.messageRecursive();
+    message.scaleToWidth(30);
+    message.setCoords();
+    this.diagramCanvas.add(message);
+   } catch (error) {
+    console.log(error);
+    
+   }
+  }
+
+  //CUADRO DE VIDA
   async addChartActivation(){
     var chartActivation= await this.fabricService.chartLife(200,200,50);
     chartActivation.setCoords();
@@ -284,7 +295,7 @@ export class GodiagramComponent implements AfterViewInit {
     this.diagramCanvas.bringToFront(chartActivation);
 
   }
-
+  //MODAL PARA ELEGIR EL TIPO DE LINEA DE RSPUESTA
   async modalTypeMessage(line:fabric.Line){
   try {
     Swal.fire({
@@ -320,7 +331,7 @@ export class GodiagramComponent implements AfterViewInit {
     
   }
   }
-
+  //CUADRO DE TEXTO
   async addToChartText(message: string){
     try {
       const chartText= await this.fabricService.chartText(200,200,message);

@@ -10,6 +10,7 @@ export class ComponentsService {
   private lineMessage:any;
   constructor() { }
 
+  //OBJETO ACTOR
   async toA(left: number, top: number):Promise<fabric.Group>{
     var circle = new fabric.Circle({
       radius: 5,
@@ -17,12 +18,10 @@ export class ComponentsService {
       left: left,
       top: top,
       selectable: false ,
-      stroke: 'black',         // Color del borde del círculo
+      stroke: 'black',       
       strokeWidth: 1, 
     });
-    
-  
-    // Crear la línea horizontal
+      
     var brazos = new fabric.Line([left -5, top +12, left + 15, top +12], {
       stroke: 'black',
       strokeWidth: 1,
@@ -35,7 +34,6 @@ export class ComponentsService {
       selectable: false  // La línea horizontal no es seleccionable
     });
     
-    // Crear la línea vertical
     var piernaIzq = new fabric.Line([left +5 ,top +25  ,left, top + 35 ], {
       stroke: 'black',
       strokeWidth: 1,
@@ -47,7 +45,7 @@ export class ComponentsService {
       strokeWidth: 1,
       selectable: false  // La línea vertical no es seleccionable
     });
-    
+      
     return new Promise((resolve, reject) => {  
       const control= new fabric.Group([circle, tronco, brazos, piernaDer,piernaIzq],{
         selectable: true,
@@ -62,6 +60,7 @@ export class ComponentsService {
      });
   }
 
+  //OBJETO IMAGEN
   async createImage(url: string, leftDistance: number, topDistance: number): Promise<fabric.Image> {
     return new Promise((resolve, reject) => {  
       fabric.Image.fromURL(url, (img: any) => {
@@ -81,6 +80,8 @@ export class ComponentsService {
       }); 
     });
   }
+
+  //OBJETO BOUNDARY
   async toBoundary(left: number, top: number):Promise<fabric.Group>{
     var circle = new fabric.Circle({
       radius: 30,
@@ -126,6 +127,7 @@ export class ComponentsService {
      });
   }
 
+  //OBJETO CONTROL
   async toControl(left: number, top: number):Promise<fabric.Group>{
     var circle = new fabric.Circle({
       radius: 30,
@@ -166,6 +168,7 @@ export class ComponentsService {
      });
   }
 
+  //OBJETO ENTIDAD
   async toEntity(left: number, top: number):Promise<fabric.Group>{
     var circle = new fabric.Circle({
       radius: 30,
@@ -202,6 +205,7 @@ export class ComponentsService {
    
   }
 
+  //OBJETO OBJECTO
   async toObject(left:number, top: number):Promise<fabric.Rect>{
     return new Promise((resolve, reject)=>{
       var rect = new fabric.Rect({
@@ -224,7 +228,7 @@ export class ComponentsService {
     })
   }
 
-
+ //CUADRO DE LINEA DE VIDA
   async chartLife(distLeft:number, distTop:number, distHeight:number):Promise<fabric.Rect>{
     return new Promise((resolve, reject) => {  
      const rect= new fabric.Rect({
@@ -241,6 +245,7 @@ export class ComponentsService {
     });
   }
 
+  //LINEA DE VIDA
   async lineLife(distLeft:number,disTop:number, distHeight:number):Promise<fabric.Line>{
     return new Promise((resolve, reject) => {  
      const line= new fabric.Line([distLeft +35, 120, distLeft + 35,disTop + distHeight + 450 ],{
@@ -252,7 +257,8 @@ export class ComponentsService {
       resolve(line);
     });
   }
-
+  
+  //CALULO DE LONGITUD DE LA LINEA
   calculateLineLength(line: fabric.Line): number {
     var lineX1 = line.x1 || 0
     var lineX2 = line.x2 || 0
@@ -265,6 +271,7 @@ export class ComponentsService {
     return length;
   }
 
+  //LINEA SIMPLE
   async arrowSimple(line:fabric.Line):Promise<fabric.Group>{
     var startX = line.x1 || 0;
     var startY = line.y1 || 0;
@@ -294,7 +301,8 @@ export class ComponentsService {
        resolve(arrow);
      });
   }
-
+  
+  //LINEA SEGMENTADA
   async arrowSegment(line: fabric.Line):Promise<fabric.Group>{
     var startX = line.x1 || 0;
     var startY = line.y1 || 0;
@@ -326,7 +334,34 @@ export class ComponentsService {
        resolve(arrow);
      });
   }
+
+  async messageRecursive():Promise<fabric.Group>{
+    var line1= new fabric.Line([100,100,200,100],
+               {stroke: 'black',strokeWidth: 3});
+
+    var line2= new fabric.Line([200,100,200,200],
+                {stroke: 'black',strokeWidth: 3});
+
+    var line3= new fabric.Line([200,200,100,200],
+                {stroke: 'black',strokeWidth: 3});
+    
+    var arrow1= new fabric.Line([100,200,110,190],
+                {stroke: 'black',strokeWidth: 3});
+    
+    var arrow2= new fabric.Line([100,200,110,210],
+                {stroke: 'black',strokeWidth: 3});
+
+        return new Promise((resolve, reject) => {  
+      const message= new fabric.Group([line1, line2, line3,arrow1, arrow2],{
+        selectable: true, 
+        lockUniScaling: true, 
+        lockRotation: true, 
+      });
+       resolve(message);
+     });    
+  }
    
+  //TRIANGULO
   async triangule(endPointX: any,endPointY:any, topDistance: any, direFle:any):Promise<fabric.Triangle>{
     return new Promise((resolve, reject) => {  
       const triangule= new fabric.Triangle({
@@ -342,6 +377,7 @@ export class ComponentsService {
      });
   }
 
+  //FUNCION PARA ELEGIR QUE TIPO DE MENSAJE
   async typeLineMessage(typeLine:string, line:fabric.Line, endPointX:any, endPointY:any):Promise<fabric.Group>{
     
     if(typeLine === 'asincrono'){
@@ -380,7 +416,8 @@ export class ComponentsService {
        resolve(this.lineMessage);
      });
   }
-
+  
+  //LINEA NORMAL
   async line(startPointX:any, startPointY:any, endPointX: any, endPointY: any):Promise<fabric.Line>{
     return new Promise((resolve, reject) => {  
       const line= new fabric.Line([startPointX, startPointY, endPointX, endPointY],{
@@ -393,7 +430,8 @@ export class ComponentsService {
        resolve(line);
      });
   }
-
+   
+  //CUADRO DE TEXTO
   async chartText(leftDistance:number, topDistance:number, text:string):Promise<fabric.Textbox>{
     return new Promise((resolve, reject) => {  
       const chartText= new fabric.Textbox(text, {
@@ -428,7 +466,7 @@ export class ComponentsService {
   async chartOprion(x1: number, y1:number)
                     :Promise<fabric.Polygon>{
 
-  var rectCoords2 = [
+    var rectCoords2 = [
     { x: x1, y: y1 },  // Esquina superior izquierda
     { x: x1 + 55, y: y1 },  // Esquina superior derecha
     { x: x1 + 55, y: y1 + 20 },  // Esquina inferior derecha
@@ -444,7 +482,8 @@ export class ComponentsService {
     resolve(rect)
     })
   }
-
+  
+  //OBJETOS PARA LOS DIFERENTES FRAGMENTOS DE INTERACCION
   async chartTextPol(message: string, distLeft:number, distTop:number):Promise<fabric.Text>{
     return new Promise((resolve, reject)=>{
       var text = new fabric.Text(message, {
@@ -457,7 +496,7 @@ export class ComponentsService {
     resolve(text);
     })
   }
-
+ 
   async charTextFragmento(message: string, distLeft:number, distTop:number):Promise<fabric.Group>{
      var text= await this.chartTextPol(message,distLeft, distTop);
   //  var text= await this.chartText(distLeft, distTop, message);
@@ -534,27 +573,5 @@ export class ComponentsService {
        resolve(rectAlt);
      });
   }
-
-
-  //ACTOR
-  async toActor(url: string, leftDistance: number, topDistance: number): Promise<fabric.Image> {
-    return new Promise((resolve, reject) => {  
-      fabric.Image.fromURL(url, (img: any) => {
-        img.scaleToWidth(30); // Ajustar el tamaño de la imagen según sea necesario
-        img.set({
-          left: leftDistance,
-          top: topDistance,
-          selectable: true,
-          hasControls: true,
-          hasBorders: true,
-          lockUniScaling: true,
-          lockScalingX: true,
-          lockScalingY: true,
-          lockMovementY: true
-        })
-        resolve(img); // Resuelve la promesa con la imagen creada
-      }); 
-    });
-  }
-
+  
 }
