@@ -190,6 +190,7 @@ export class ProjectComponent {
         icon:"warning"
       }).then((result)=>{
         if(result.isConfirmed){    
+
           this.router.navigate([`/room/${idRoom}`])     
         }
       })

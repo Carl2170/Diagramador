@@ -3,7 +3,7 @@ import { fabric } from 'fabric';
 import {ObjectComp} from '../../../../../classes/objectComp';
 import Swal from 'sweetalert2';
 import { ComponentsService } from '../../../services/fabricJS/components.service';
-
+import { SocketDiagramService } from '../../../services/socketDiagram/socket-diagram.service';
 @Component({
   selector: 'app-godiagram',
   templateUrl: './godiagram.component.html',
@@ -15,6 +15,8 @@ export class GodiagramComponent implements AfterViewInit {
 
   private diagramCanvas: any;
   private diagramOptions: any;
+
+  public idRoom: any;
 
   private startPoint: fabric.Point | null = null; // Punto inicial de la línea
   private isDrawingLine = false; // Bandera para indicar si estás dibujando una nueva línea
@@ -42,12 +44,25 @@ export class GodiagramComponent implements AfterViewInit {
 
 
 
-  constructor(private fabricService:ComponentsService){}
+  constructor(private fabricService:ComponentsService
+    // private socketDiagram:SocketDiagramService
+  )  {
+    this.idRoom= localStorage.getItem('idRoom');
+    // socketDiagram.callback.subscribe(res=>{
+    //   console.log(res);
+    // //  this.writeSingle(prevPos,false)
+      
+    // })
+   
+  }
 
   ngAfterViewInit(): void {
     this.initializeCanvas(); 
+    // this.socketDiagram.answerAddBoundary().subscribe((res: any) => {
+    //   console.log(res.message);
+    //  });
+   
   }
-
 
   private initializeCanvas(): void {    
     this.diagramCanvas = new fabric.Canvas(this.diagramCanvasRef.nativeElement, {
@@ -120,7 +135,7 @@ export class GodiagramComponent implements AfterViewInit {
     });
   }
 
-  async addBoundary(){
+  public addBoundary=async(emit = true)=>{
 
     this.leftObject= this.getArrayDistanceLeftComponents();
 
@@ -143,6 +158,12 @@ export class GodiagramComponent implements AfterViewInit {
     //cuadro de texto 
     const chartMessage= await this.fabricService.chartText(this.leftObject-30, imgTop +60,'Boundary');
     this.diagramCanvas.add(chartMessage);
+
+    if(emit){
+      console.log('llamda socket');
+      var nameUser= localStorage.getItem('name')
+    //  this.socketDiagram.emitAddBoundary(this.idRoom, nameUser);
+    }
   
     this.diagramCanvas.on('object:moving', (e: any) => {
       if (e.target === boundary) {
