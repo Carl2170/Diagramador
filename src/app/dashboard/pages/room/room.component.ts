@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SocketWebService } from '../../services/socketIO/socket-web.service';
+import { SocketDiagramService } from '../../services/socketDiagram/socket-diagram.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,32 +11,64 @@ import Swal from 'sweetalert2';
 })
 export class RoomComponent implements OnInit{
   roomName: string | null='';
-  arrayUser:string[]=[];
+  arrayUser:any;
   idUser:any;
   idRoom:any;
   nameUser:any;
+
+  username:any
+
   constructor( private route: Router,
-               private socketWebService: SocketWebService)
-               {}
+               private socketWebService: SocketWebService,
+              )
+               {
+               }
                
   async ngOnInit(){
     try {
-      this.socketWebService.getUsersConectedObservable().subscribe((res: any) => {
-        this.arrayUser = res;
-      });
 
-      this.socketWebService.getMessageUserConnected().subscribe((res: any) => {
+      // this.socketWebService.getUsersConectedObservable().subscribe((res: any) => {
+      //   this.arrayUser = res;
+      // });
+
+    await  this.socketWebService.receive('table-user-actualice',(data:any)=>{
+        this.arrayUser = data;
+      })
+
+      // this.socketWebService.getMessageUserConnected().subscribe((res: any) => {
+      //   this.nameUser= localStorage.getItem('name');
+      //   if(this.nameUser !== null){
+      //     if(this.nameUser == res.nameUser){
+      //       this.notiToaster("Has ","info","ingresado a la sala.");
+      //     }else{
+      //       this.notiToaster(res.nameUser,"info"," ha ingresado a la sala.");
+      //     }
+      //   }
+      // });
+      
+    await  this.socketWebService.receive('user-connected', (data:any)=>{
         this.nameUser= localStorage.getItem('name');
-        if(this.nameUser !== null){
-          if(this.nameUser == res.nameUser){
-            this.notiToaster("Has ","info","ingresado a la sala.");
-          }else{
-            this.notiToaster(res.nameUser,"info"," ha ingresado a la sala.");
+          if(this.nameUser !== null){
+            if(this.nameUser == data.nameUser){
+              this.notiToaster("Has ","info","ingresado a la sala.");
+            }else{
+              this.notiToaster(data.nameUser,"info"," ha ingresado a la sala.");
+            }
           }
-        }
-      });
+      })
 
-      this.socketWebService.getMessageUserDesconnected().subscribe((res: any) => {
+      // this.socketWebService.getMessageUserDesconnected().subscribe((res: any) => {
+      //   this.nameUser= localStorage.getItem('name');
+      //   if(this.nameUser !== null){
+      //     if(this.nameUser == res.nameUser){
+      //       this.notiToaster("Has ","info","salido de la sala.");
+      //     }else{
+      //       this.notiToaster(res.nameUser,"info"," ha salido de la sala.");
+      //     }
+      //   }
+      // });
+
+       await this.socketWebService.receive('user-desconnected',(res:any)=>{
         this.nameUser= localStorage.getItem('name');
         if(this.nameUser !== null){
           if(this.nameUser == res.nameUser){
@@ -44,7 +77,7 @@ export class RoomComponent implements OnInit{
             this.notiToaster(res.nameUser,"info"," ha salido de la sala.");
           }
         }
-      });
+      })
 
       this.roomName = localStorage.getItem('nameRoom');
       const local_id= localStorage.getItem('idUser');
@@ -53,8 +86,11 @@ export class RoomComponent implements OnInit{
     if(local_id != null && local_idRoom != null ){
       this.idRoom= parseInt(local_idRoom);
       this.idUser= parseInt(local_id);     
-      this.socketWebService.roomStarted(this.idUser,this.idRoom, this.roomName)
+     // this.socketWebService.roomStarted(this.idUser,this.idRoom, this.roomName)
+     await this.socketWebService.send('room-started', { userId:this.idUser ,nameUser:this.nameUser, roomId:this.idRoom})
     }
+
+  
    
     } catch (error) {
       console.log(error);
@@ -74,6 +110,7 @@ export class RoomComponent implements OnInit{
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.socketWebService.roomClosed();
+        localStorage.removeItem('sessionID');
         this.route.navigate(['/home']);
       } else if (result.isDenied) {
         Swal.fire({
@@ -88,6 +125,7 @@ export class RoomComponent implements OnInit{
         }).then((result) => {
           if (result.isDenied) {
             this.socketWebService.roomClosed();
+            localStorage.removeItem('sessionID');
                 this.route.navigate(['/home']);
           }
         })
